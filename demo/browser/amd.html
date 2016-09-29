@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Micro Event: As an AMD Module</title>
+  <script src="./require.min.js"></script>
+  <script src="../../dist/micro-event.min.js"></script>
+</head>
+
+<body>
+  <h2>See the Console</h2>
+  <script>
+    require(['MicroEvent'], function(Event) {
+      Event
+        .on('boom!', function(e) {
+          console.log(e.type, e.timeStamp);
+        })
+        .trigger('boom!')
+        .trigger(new Event('boom!'));
+
+      Event
+        .on('ha!', function(e, foo, bar) {
+          console.log(e.type, foo, bar);
+        })
+        .trigger('ha!', ['foo', 'bar']);
+    });
+  </script>
+</body>
+
+</html>
