@@ -1,8 +1,8 @@
-# logger
+# MicroEvent
 
 [![NPM version](https://img.shields.io/npm/v/micro-event.svg?style=flat)](https://www.npmjs.org/package/micro-event)
 [![Build Status](https://travis-ci.org/psfe/micro-event.svg?branch=master&foo)](https://travis-ci.org/psfe/micro-event)
-[![Coverage Status](https://coveralls.io/repos/github/psfe/micro-event/badge.svg?branch=master&foo)](https://coveralls.io/github/psfe/micro-event?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/psfe/micro-event/badge.svg?branch=master)](https://coveralls.io/github/psfe/micro-event?branch=master)
 [![Dependency manager](https://img.shields.io/david/psfe/micro-event.svg?style=flat)](https://david-dm.org/psfe/micro-event)
 
 ## Installation

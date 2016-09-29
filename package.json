@@ -1,6 +1,6 @@
 {
   "name": "micro-event",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A JavaScript Event Emmiter for Node.js and Browsers",
   "main": "index.js",
   "scripts": {
