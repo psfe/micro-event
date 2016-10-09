@@ -11,15 +11,16 @@
 <body>
   <h2>See the Console</h2>
   <script>
-    require(['MicroEvent'], function(Event) {
-      Event
-        .on('boom!', function(e) {
+    require(['Emitter'], function(Emitter) {
+      var emitter = Emitter();
+
+      emitter.on('boom!', function(e) {
           console.log(e.type, e.timeStamp);
         })
         .trigger('boom!')
-        .trigger(new Event('boom!'));
+        .trigger(new Emitter.Event('boom!'));
 
-      Event
+      emitter
         .on('ha!', function(e, foo, bar) {
           console.log(e.type, foo, bar);
         })

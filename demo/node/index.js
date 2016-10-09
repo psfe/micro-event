@@ -1,13 +1,14 @@
-var Event = require('../..');
+var Emitter = require('../..');
+var emitter = Emitter();
 
-Event
+emitter
     .on('boom!', function(e){
         console.log(e.type, e.timeStamp);
     })
     .trigger('boom!')
-    .trigger(new Event('boom!'));
+    .trigger(new Emitter.Event('boom!'));
 
-Event
+emitter
     .on('ha!', function(e, foo, bar){
         console.log(e.type, foo, bar);
     })

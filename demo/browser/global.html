@@ -10,16 +10,16 @@
 <body>
   <h2>See the Console</h2>
   <script>
-    var Event = window.MicroEvent;
+    var emitter = window.Emitter();
 
-    Event
+    emitter
       .on('boom!', function(e) {
         console.log(e.type, e.timeStamp);
       })
       .trigger('boom!')
-      .trigger(new Event('boom!'));
+      .trigger(new window.Emitter.Event('boom!'));
 
-    Event
+    emitter
       .on('ha!', function(e, foo, bar) {
         console.log(e.type, foo, bar);
       })

@@ -1,79 +1,95 @@
 (function() {
-    var events = {};
+    function Emitter() {
+        var e = Object.create(emitter);
+        e.events = {};
+        return e;
+    }
 
     function Event(type) {
         this.type = type;
         this.timeStamp = new Date();
     }
 
-    Event.on = function(type, handler) {
-        if (events.hasOwnProperty(type)) {
-            events[type].push(handler);
+    var emitter = {};
+
+    emitter.on = function(type, handler) {
+        if (this.events.hasOwnProperty(type)) {
+            this.events[type].push(handler);
         } else {
-            events[type] = [handler];
+            this.events[type] = [handler];
         }
-        return Event;
+        return this;
     };
 
-    Event.off = function(type, handler) {
+    emitter.off = function(type, handler) {
         if (arguments.length === 0) {
-            return _offAll();
+            return this._offAll();
         }
         if (handler === undefined) {
-            return _offByType(type);
+            return this._offByType(type);
         }
-        return _offByHandler(type, handler);
+        return this._offByHandler(type, handler);
     };
 
-    Event.trigger = function(event, args) {
+    emitter.trigger = function(event, args) {
         if (!(event instanceof Event)) {
             event = new Event(event);
         }
-        return _dispatch(event, args);
+        return this._dispatch(event, args);
     };
 
-    function _dispatch(event, args) {
-        if (!events.hasOwnProperty(event.type)) return;
+    emitter._dispatch = function(event, args) {
+        if (!this.events.hasOwnProperty(event.type)) return;
         args = args || [];
         args.unshift(event);
 
-        var handlers = events[event.type] || [];
+        var handlers = this.events[event.type] || [];
         handlers.forEach(handler => handler.apply(null, args));
-        return Event;
-    }
+        return this;
+    };
 
-    function _offByHandler(type, handler) {
-        if (!events.hasOwnProperty(type)) return;
-        var i = events[type].indexOf(handler);
+    emitter._offByHandler = function(type, handler) {
+        if (!this.events.hasOwnProperty(type)) return;
+        var i = this.events[type].indexOf(handler);
         if (i > -1) {
-            events[type].splice(i, 1);
+            this.events[type].splice(i, 1);
         }
-        return Event;
-    }
+        return this;
+    };
 
-    function _offByType(type) {
-        if (events.hasOwnProperty(type)) {
-            delete events[type];
+    emitter._offByType = function(type) {
+        if (this.events.hasOwnProperty(type)) {
+            delete this.events[type];
         }
-        return Event;
-    }
+        return this;
+    };
 
-    function _offAll() {
-        events = {};
-        return Event;
-    }
+    emitter._offAll = function() {
+        this.events = {};
+        return this;
+    };
 
+    Emitter.Event = Event;
+
+    Emitter.mixin = function(obj, arr){
+        var emitter = new Emitter();
+        arr.map(function(name){
+            obj[name] = function(){
+                return emitter[name].apply(emitter, arguments);
+            };
+        });
+    };
 
     // CommonJS
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-        module.exports = Event;
+        module.exports = Emitter;
     }
     // Browser
     else if (typeof define === 'function' && define.amd) {
-        define('MicroEvent', [], function() {
-            return Event;
+        define('Emitter', [], function() {
+            return Emitter;
         });
     } else {
-        window.MicroEvent = Event;
+        window.Emitter = Emitter;
     }
 })();
