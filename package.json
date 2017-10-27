@@ -6,8 +6,9 @@
   "scripts": {
     "test": "mocha",
     "dist": "babel index.js > dist/micro-event.js && uglifyjs dist/micro-event.js > dist/micro-event.min.js",
-    "prepublish": "npm run test && npm run dist"
+    "prepublishOnly": "npm run test && npm run dist"
   },
+  "browser": "./dist/micro-event.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/psfe/micro-event.git"
@@ -19,7 +20,7 @@
     "Node.js"
   ],
   "author": "harttle",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/psfe/micro-event/issues"
   },
